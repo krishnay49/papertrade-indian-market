@@ -3,14 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 const TV_MAP = {
-  'NSE:NIFTY50':   'NSE:NIFTY50',
+  'NSE:NIFTY': 'NSE:NIFTY',
   'NSE:BANKNIFTY': 'NSE:BANKNIFTY',
-  'BSE:SENSEX':    'BSE:SENSEX',
-  'NSE:FINNIFTY':  'NSE:FINNIFTY',
-  'NSE:HDFCBANK':  'NSE:HDFCBANK',
-  'NSE:RELIANCE':  'NSE:RELIANCE',
-  'NSE:TCS':       'NSE:TCS',
-  'NSE:INFY':      'NSE:INFY',
+  'BSE:SENSEX': 'BSE:SENSEX',
+  'NSE:FINNIFTY': 'NSE:FINNIFTY',
+  'NSE:HDFCBANK': 'NSE:HDFCBANK',
+  'NSE:RELIANCE': 'NSE:RELIANCE',
+  'NSE:TCS': 'NSE:TCS',
+  'NSE:INFY': 'NSE:INFY',
 };
 const TFS = ['1','5','15','60','D'];
 const TF_LABELS = { '1':'1m','5':'5m','15':'15m','60':'1H','D':'1D' };
