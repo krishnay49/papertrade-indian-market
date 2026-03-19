@@ -16,12 +16,12 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/papertrad
 // ── MODELS ──
 const TradeSchema = new mongoose.Schema({
   sessionId: String,
-  kind: String,         // 'option' | 'stock'
+  kind: String,
   sym: String,
   name: String,
   strike: Number,
-  type: String,         // CE | PE
-  side: String,         // BUY | SELL
+  type: String,
+  side: String,
   prem: Number,
   price: Number,
   qty: Number,
@@ -48,7 +48,7 @@ const PortfolioSchema = new mongoose.Schema({
 const Trade = mongoose.model('Trade', TradeSchema);
 const Portfolio = mongoose.model('Portfolio', PortfolioSchema);
 
-// ── IN-MEMORY LIVE PRICES (updated by Twelve Data WS) ──
+// ── IN-MEMORY LIVE PRICES ──
 const prices = {};
 
 // ── TWELVE DATA SYMBOLS (free tier: 8 max) ──
@@ -93,9 +93,6 @@ function connectTwelveData(apiKey) {
 
   tdWs.on('open', () => {
     console.log('✅ Twelve Data WS connected');
-    // Subscribe to all symbols
-    const symbols = TWELVE_SYMBOLS.map(s => s.td + ':NSE').join(',');
-    // Also try BSE for SENSEX
     tdWs.send(JSON.stringify({
       action: 'subscribe',
       params: { symbols: TWELVE_SYMBOLS.map(s => {
@@ -109,7 +106,7 @@ function connectTwelveData(apiKey) {
     try {
       const msg = JSON.parse(data.toString());
       if (msg.event === 'price' && msg.symbol && msg.price) {
-        const sym = msg.symbol.split(':')[0]; // e.g. NIFTY from NIFTY:NSE
+        const sym = msg.symbol.split(':')[0];
         const entry = TWELVE_SYMBOLS.find(s => s.td === sym);
         if (entry) {
           const ltp = parseFloat(msg.price);
@@ -141,7 +138,6 @@ async function fetchRestPrices(apiKey) {
     const symbols = TWELVE_SYMBOLS.map(s =>
       s.td === 'SENSEX' ? s.td + ':BSE' : s.td + ':NSE'
     ).join(',');
-    const fetch = (await import('node-fetch')).default;
     const res = await fetch(
       `https://api.twelvedata.com/price?symbol=${symbols}&apikey=${apiKey}`
     );
@@ -185,9 +181,7 @@ app.post('/api/connect', async (req, res) => {
   const { apiKey } = req.body;
   if (!apiKey) return res.status(400).json({ error: 'apiKey required' });
 
-  // Validate key with REST first
   try {
-    const fetch = (await import('node-fetch')).default;
     const testRes = await fetch(`https://api.twelvedata.com/price?symbol=NIFTY:NSE&apikey=${apiKey}`);
     const testData = await testRes.json();
     if (testData.status === 'error') {
