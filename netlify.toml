@@ -1,10 +1,10 @@
 [build]
+  base = "client"
   command = "npm install && npm run build"
   publish = "build"
 
 [build.environment]
   NODE_VERSION = "18"
-  REACT_APP_API_URL = "https://papertrade-indian-market-production.up.railway.app"
 
 [[redirects]]
   from = "/*"
