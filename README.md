@@ -7,7 +7,7 @@ A full-stack paper trading app built with MERN stack + Twelve Data WebSocket for
 - **Backend**: Node.js + Express
 - **Database**: MongoDB Atlas (free)
 - **Real-time prices**: Twelve Data WebSocket (free tier — 8 symbols)
-- **Hosting**: Render (backend) + Netlify (frontend) — both free
+- **Hosting**: Railway (backend) + Netlify (frontend)
 
 ---
 
@@ -40,9 +40,9 @@ git push -u origin main
 
 ---
 
-## Step 3 — Deploy Backend on Render (free)
+## Step 3 — Deploy Backend on Railway
 
-1. Go to **render.com** → New → Web Service
+1. Go to **railway.app** → New Project → Deploy from GitHub
 2. Connect your GitHub repo
 3. Settings:
    - **Root Directory**: `server`
@@ -54,20 +54,20 @@ git push -u origin main
    CLIENT_URL  = https://YOUR-NETLIFY-APP.netlify.app
    PORT        = 5000
    ```
-5. Click **Deploy** → copy your Render URL (e.g. `https://papertrade-api.onrender.com`)
+5. Click **Deploy** → copy your Railway URL (e.g. `https://papertrade-indian-market-production.up.railway.app`)
 
 ---
 
-## Step 4 — Deploy Frontend on Netlify (free)
+## Step 4 — Deploy Frontend on Netlify
 
 1. Go to **netlify.com** → New Site → Import from GitHub
 2. Settings:
    - **Base directory**: `client`
-   - **Build command**: `npm run build`
+   - **Build command**: `npm install && npm run build`
    - **Publish directory**: `client/build`
-3. Add Environment Variables:
+3. Add Environment Variable:
    ```
-   REACT_APP_API_URL = https://papertrade-api.onrender.com
+   REACT_APP_API_URL = https://your-railway-app-url.up.railway.app
    ```
 4. Click **Deploy**
 
@@ -107,7 +107,7 @@ npm run dev
 |---------|-----------|-------|
 | Twelve Data | 8 symbols live | Nifty, BankNifty, Sensex, FinNifty, HDFC, Reliance, TCS, Infosys |
 | MongoDB Atlas | 512 MB storage | More than enough for trades |
-| Render | 750 hrs/month | Sleeps after 15min inactivity — wakes in ~30s |
+| Railway | $5 free credit/month | Always-on, no cold starts |
 | Netlify | 100 GB bandwidth | Unlimited for personal use |
 
 ---
@@ -125,6 +125,7 @@ papertrade/
 │   ├── src/
 │   │   ├── App.jsx
 │   │   ├── App.css
+│   │   ├── index.js         # React entry point
 │   │   ├── context/
 │   │   │   └── AppContext.jsx  # Global state + API calls
 │   │   ├── components/
@@ -141,6 +142,7 @@ papertrade/
 │   │   └── index.html
 │   └── package.json
 ├── package.json
+├── netlify.toml
 ├── .gitignore
 └── README.md
 ```
