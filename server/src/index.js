@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
