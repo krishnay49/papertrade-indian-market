@@ -7,7 +7,7 @@ A full-stack paper trading app built with MERN stack + Twelve Data WebSocket for
 - **Backend**: Node.js + Express
 - **Database**: MongoDB Atlas (free)
 - **Real-time prices**: Twelve Data WebSocket (free tier — 8 symbols)
-- **Hosting**: Railway (backend) + Netlify (frontend)
+- **Hosting**: Railway (backend) + Vercel (frontend)
 
 ---
 
